@@ -1,8 +1,10 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
+#include "cocos-ext.h"
 
 using namespace cocos2d;
 using namespace CocosDenshion;
+using namespace extension;
 
 CCScene* HelloWorld::scene()
 {
@@ -29,47 +31,20 @@ bool HelloWorld::init()
         return false;
     }
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
+    CCNode *node = CCNode::create();
+    node->setPosition(CCPoint(100,100));
+    //addChild(node);
+    
+    CCControlSlider *slider2 = CCControlSlider::create("sliderTrack.png", "sliderProgress.png", "sliderThumb.png");
+    slider2->setAnchorPoint(ccp(0.5f, 1.0f));
+    slider2->setMinimumValue(0.0f); // Sets the min value of range
+    slider2->setMaximumValue(5.0f); // Sets the max value of range
+    slider2->setPosition(ccp(300, 600));
+    slider2->setTag(1);
+    slider2->setTouchEnabled(true);
+    //slider2->addTargetWithActionForControlEvents(this, cccontrol_selector(GameMain::moveMenuContainer), CCControlEventValueChanged);
+    this->addChild(slider2,1);
 
-    // add a "close" icon to exit the progress. it's an autorelease object
-    CCMenuItemImage *pCloseItem = CCMenuItemImage::create(
-                                        "CloseNormal.png",
-                                        "CloseSelected.png",
-                                        this,
-                                        menu_selector(HelloWorld::menuCloseCallback) );
-    pCloseItem->setPosition( ccp(CCDirector::sharedDirector()->getWinSize().width - 20, 20) );
-
-    // create menu, it's an autorelease object
-    CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
-    pMenu->setPosition( CCPointZero );
-    this->addChild(pMenu, 1);
-
-    /////////////////////////////
-    // 3. add your codes below...
-
-    // add a label shows "Hello World"
-    // create and initialize a label
-    CCLabelTTF* pLabel = CCLabelTTF::create("Hello World", "Thonburi", 34);
-
-    // ask director the window size
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-
-    // position the label on the center of the screen
-    pLabel->setPosition( ccp(size.width / 2, size.height - 20) );
-
-    // add the label as a child to this layer
-    this->addChild(pLabel, 1);
-
-    // add "HelloWorld" splash screen"
-    CCSprite* pSprite = CCSprite::create("HelloWorld.png");
-
-    // position the sprite on the center of the screen
-    pSprite->setPosition( ccp(size.width/2, size.height/2) );
-
-    // add the sprite as a child to this layer
-    this->addChild(pSprite, 0);
     
     return true;
 }
